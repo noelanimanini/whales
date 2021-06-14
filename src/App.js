@@ -1,24 +1,23 @@
 import "./App.css";
-import { Jumbotron, Container } from "react-bootstrap";
 import Navbar from "./NavBar";
 import Home from "./Home";
 import Whale from "./Whale";
+import Map from "./Map";
+import history from "./history";
+import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 
 function App() {
   return (
     <div>
-      <Navbar />
-      <Jumbotron fluid>
-        <Container>
-          <h1>Fluid jumbotron</h1>
-          <p>
-            This is a modified jumbotron that occupies the entire horizontal
-            space of its parent.
-          </p>
-        </Container>
-      </Jumbotron>
-      <Home />
-      <Whale />
+      <BrowserRouter history={history}>
+        <Navbar />
+
+        <Switch>
+          <Route exact path="/" render={() => <Home />} />
+
+          <Route exact path="/whalelocations" render={() => <Map />} />
+        </Switch>
+      </BrowserRouter>
     </div>
   );
 }

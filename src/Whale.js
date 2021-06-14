@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Card, Button, CardDeck } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+
 import whale from "./whale.css";
 
 function Whale() {
+  const dispatch = useDispatch();
   const [whales, setWhales] = useState({});
-  const [info, setInfo] = useState({});
   let whaleDS = {};
 
   useEffect(() => {
@@ -19,15 +21,20 @@ function Whale() {
           for (let i = 0; i < result.length; i++) {
             whaleDS[result[i].species] = (whaleDS[result[i].species] || 0) + 1;
           }
-          setInfo(result);
+
           setWhales(whaleDS);
+          console.log(result);
+          dispatch({
+            type: "SET_WHALE_LOCATIONS",
+            locations: result,
+          });
         },
         (error) => {
           console.log(error);
         }
       );
   };
-
+  console.log(whales);
   const whaleImages = (x) => {
     if (x === "humpback") {
       return (
@@ -63,6 +70,35 @@ function Whale() {
       );
     }
   };
+
+  const moreInfo = (x) => {
+    if (x === "humpback") {
+      return (
+        <Card.Link className="mt-auto" href="">
+          Learn more about Humpback Whales
+        </Card.Link>
+      );
+    } else if (x === "orca") {
+      return (
+        <Card.Link href="" className="mt-auto">
+          Learn more about Orcas
+        </Card.Link>
+      );
+    } else if (x === "harbor porpoise") {
+      return (
+        <Card.Link href="" className="mt-auto">
+          Learn more about Harbor Porpoise
+        </Card.Link>
+      );
+    } else if (x === "gray whale") {
+      return (
+        <Card.Link href="" className="mt-auto">
+          Learn more about Gray Whales
+        </Card.Link>
+      );
+    }
+  };
+
   const renderWhales = () => {
     return Object.keys(whales).map((x) => (
       <div key={x} className="container-fluid">
@@ -71,18 +107,11 @@ function Whale() {
           style={{ width: "17em", padding: "10px" }}
         >
           {whaleImages(x)}
-          <Card.Body>
-            <Card.Title>{x}</Card.Title>
-            <Card.Subtitle className="mb-2 text-muted">
-              {whales[x]} {x} have been spotted
-            </Card.Subtitle>
-            <Card.Text>
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
-            </Card.Text>
-            <Card.Link href="#">Card Link</Card.Link>
-            <Card.Link href="#">Another Link</Card.Link>
-          </Card.Body>
+          <Card.Title>{x}</Card.Title>
+          <Card.Subtitle className="mb-2 text-muted">
+            {whales[x]} {x} have been spotted
+          </Card.Subtitle>
+          <Card.Body className="d-flex flex-column">{moreInfo(x)}</Card.Body>
         </Card>
       </div>
     ));
