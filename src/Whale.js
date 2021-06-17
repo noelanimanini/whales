@@ -17,21 +17,22 @@ function Whale() {
     fetch("http://hotline.whalemuseum.org/api.json")
       .then((res) => res.json())
       .then(
-        (result) => {
-          for (let i = 0; i < result.length; i++) {
-            whaleDS[result[i].species] = (whaleDS[result[i].species] || 0) + 1;
-          }
+        (result) => dispatch({ type: "SET_WHALES", payload: result })
+        // {
+        //   for (let i = 0; i < result.length; i++) {
+        //     whaleDS[result[i].species] = (whaleDS[result[i].species] || 0) + 1;
+        //   }
 
-          setWhales(whaleDS);
-          console.log(result);
-          dispatch({
-            type: "SET_WHALE_LOCATIONS",
-            locations: result,
-          });
-        },
-        (error) => {
-          console.log(error);
-        }
+        //   setWhales(whaleDS);
+        //   console.log(result);
+        //   dispatch({
+        //     type: "SET_WHALES",
+        //     payload: result,
+        //   });
+        // },
+        // (error) => {
+        //   console.log(error);
+        // }
       );
   };
   console.log(whales);
@@ -117,7 +118,12 @@ function Whale() {
     ));
   };
 
-  return <div style={{ display: "inline-flex" }}>{renderWhales()}</div>;
+  return (
+    <div style={{ display: "inline-flex" }}>
+      {/* {renderWhales()} */}
+      hi
+    </div>
+  );
 }
 
 export default Whale;

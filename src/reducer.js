@@ -1,15 +1,16 @@
-export const initialState = {
-  locations: [],
+const initialState = {
+  whales: [],
 };
 
-export const reducer = (state = initialState, action) => {
+const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case "SET_WHALE_LOCATIONS":
+    case "SET_WHALES":
       return {
         ...state,
-        locations: action.locations,
+        whales: action.payload,
       };
     default:
       return state;
   }
 };
+export default reducer;
