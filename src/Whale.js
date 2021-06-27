@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Card, Button, CardDeck } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
+import { connect } from "react-redux";
+import "./whale.css";
 
-import whale from "./whale.css";
-
-function Whale() {
-  const dispatch = useDispatch();
+function Whale(props) {
   const [whales, setWhales] = useState({});
   let whaleDS = {};
 
+  const test = () => {
+    console.log(props.whales);
+    // return props.whales.map((x) => (
+    //   <div key={x.name} id={x.id}>
+    //     {x.species}{" "}
+    //   </div>
+    // ));
+  };
   useEffect(() => {
     getWhales();
   }, []);
@@ -16,26 +22,16 @@ function Whale() {
   const getWhales = () => {
     fetch("http://hotline.whalemuseum.org/api.json")
       .then((res) => res.json())
-      .then(
-        (result) => dispatch({ type: "SET_WHALES", payload: result })
-        // {
-        //   for (let i = 0; i < result.length; i++) {
-        //     whaleDS[result[i].species] = (whaleDS[result[i].species] || 0) + 1;
-        //   }
+      .then((result) => {
+        props.addWhales(result);
+        for (let i = 0; i < result.length; i++) {
+          whaleDS[result[i].species] = (whaleDS[result[i].species] || 0) + 1;
+        }
 
-        //   setWhales(whaleDS);
-        //   console.log(result);
-        //   dispatch({
-        //     type: "SET_WHALES",
-        //     payload: result,
-        //   });
-        // },
-        // (error) => {
-        //   console.log(error);
-        // }
-      );
+        setWhales(whaleDS);
+      });
   };
-  console.log(whales);
+
   const whaleImages = (x) => {
     if (x === "humpback") {
       return (
@@ -118,12 +114,17 @@ function Whale() {
     ));
   };
 
-  return (
-    <div style={{ display: "inline-flex" }}>
-      {/* {renderWhales()} */}
-      hi
-    </div>
-  );
+  return <div style={{ display: "inline-flex" }}>{renderWhales()}</div>;
 }
+const mapStateToProps = (state) => {
+  console.log(state);
+  return {
+    whales: state.whales,
+  };
+};
 
-export default Whale;
+const mapDispatchToProps = (dispatch) => ({
+  addWhales: (info) => dispatch({ type: "ADD_WHALES", payload: info }),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Whale);

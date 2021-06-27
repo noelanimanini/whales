@@ -2,7 +2,7 @@ import "./App.css";
 import Navbar from "./NavBar";
 import Home from "./Home";
 import Whale from "./Whale";
-import Map from "./Map";
+import Map from "./WhaleMap";
 import history from "./history";
 import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 

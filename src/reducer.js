@@ -1,16 +1,18 @@
-const initialState = {
-  whales: [],
+export const initialState = {
+  whales: null,
 };
 
-const reducer = (state = initialState, action) => {
+export const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case "SET_WHALES":
+    case "ADD_WHALES":
+      console.log(action);
       return {
         ...state,
+
         whales: action.payload,
       };
+
     default:
       return state;
   }
 };
-export default reducer;
