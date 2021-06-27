@@ -1,17 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { connect, useSelector } from "react-redux";
 import { store } from "./index";
+import { reducer } from "./reducer";
 
 function WhaleMap(props) {
-  console.log(props);
-  // const test = () => {
-  //   return props.whales.map((x) => (
-  //     <div key={x.name} id={x.id}>
-  //       {x.species}{" "}
-  //     </div>
-  //   ));
-  // };
-  return <div>something</div>;
+  const test = () => {
+    console.log(props);
+  };
+  return <div>{test()}</div>;
 }
 
 const mapStateToProps = (state) => {
