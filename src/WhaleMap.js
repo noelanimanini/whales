@@ -4,30 +4,18 @@ import { store } from "./index";
 import { reducer } from "./reducer";
 
 function WhaleMap(props) {
+  const [names, setNames] = useState({});
   const getUsers = () => {
     fetch("https://randomuser.me/api/?results=10")
       .then((response) => response.json())
-      .then((x) => displayUsers(x));
+      .then((x) => setNames(x));
   };
 
-  const displayUsers = (x) => {
-    let results = x.results;
-    console.log(results);
-    return Object.keys(results).map((x) => (
-      <div>
-        <h1>{results[x].name.first}</h1>
-        {console.log(results[x].name.first)}
-      </div>
-    ));
+  const displayUsers = (names) => {
+    console.log(names);
   };
+  displayUsers(names);
   return <div>{getUsers()}</div>;
 }
 
-const mapStateToProps = (state) => {
-  console.log(state);
-  return {
-    whales: state.whales,
-  };
-};
-
-export default connect(mapStateToProps, null)(WhaleMap);
+export default WhaleMap;
