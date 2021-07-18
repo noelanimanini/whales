@@ -4,10 +4,23 @@ import { store } from "./index";
 import { reducer } from "./reducer";
 
 function WhaleMap(props) {
-  const test = () => {
-    console.log(props);
+  const getUsers = () => {
+    fetch("https://randomuser.me/api/?results=10")
+      .then((response) => response.json())
+      .then((x) => displayUsers(x));
   };
-  return <div>{test()}</div>;
+
+  const displayUsers = (x) => {
+    let results = x.results;
+    console.log(results);
+    return Object.keys(results).map((x) => (
+      <div>
+        <h1>{results[x].name.first}</h1>
+        {console.log(results[x].name.first)}
+      </div>
+    ));
+  };
+  return <div>{getUsers()}</div>;
 }
 
 const mapStateToProps = (state) => {
